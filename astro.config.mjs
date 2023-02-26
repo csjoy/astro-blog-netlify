@@ -8,7 +8,7 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://stargazers.club',
+  site: 'https://delightful-daffodil.netlify.app',
   integrations: [image({
     serviceEntryPoint: '@astrojs/image/sharp'
   }), sitemap()]
