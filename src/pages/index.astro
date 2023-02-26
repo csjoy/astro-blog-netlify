@@ -1,15 +1,38 @@
 ---
+
+// Component imports
+import MainLayout from "../layouts/MainLayout.astro";
+import PostCard from "../components/PostCard.astro";
+import Link from "../components/Link.astro";
+
+// utils imports
+import { formateBlogPosts } from "../js/utils";
+
+const allPosts = await Astro.glob("./blog/*.md")
+const formattedPosts = formateBlogPosts(allPosts, {
+	limit: 3,
+})
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<MainLayout title="My Blog" description="Home Page">
+
+	<section class="container about" aria-label="About Me">
+    <img src="/images/headshot.jpg" alt="My headshot" width="200" height="330">
+    <div class="content">
+      <h1 class="h1">My Blog</h1>
+      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam sequi a blanditiis obcaecati fuga sed? Ducimus, eum. Delectus officiis earum doloribus iure modi voluptatum</p>
+      <Link href="/about/" style="secondary" text="👋 About Me"/>
+    </div>
+  </section>
+
+	<section class="container" aria-label="New Blog Posts">
+    <h2 class="h1">New Blog Posts</h2>
+    <div class="post-container">
+      {
+        formattedPosts.map((post) => (
+        <PostCard frontmatter={post.frontmatter} url={post.url} tagType="h3" />
+        ))
+      }
+    </div>
+  </section>
+</MainLayout>
